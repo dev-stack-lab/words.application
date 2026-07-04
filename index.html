@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シス単</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="view-select-material" class="view-content">
+            <h2 class="select-title">教材を選択してください</h2>
+            <div class="material-card-group">
+                <button class="material-card-btn" data-material="shistan">
+                    <span class="material-name">システム英単語</span>
+                </button>
+                <button class="material-card-btn" data-material="kobun">
+                    <span class="material-name">古文単語</span>
+                </button>
+                <button class="material-card-btn" data-material="ex1">
+                    <span class="material-name">英検準1級英熟語EX</span>
+                </button>
+            </div>
+        </div>
+        <div class="tab-menu">
+            <button id="tab-back-to-menu" class="tab-btn">教材変更</button>
+            <button id="tab-study" class="tab-btn active">学習する</button>
+            <button id="tab-list" class="tab-btn">単語一覧</button>
+            <button id="tab-settings" class="tab-btn">設定</button>
+        </div>
+
+        <div id="view-study" class="view-content">
+            <div class="compact-settings">
+                <div class="range-row">
+                    <input type="number" id="start-range" value="1"> 〜 
+                    <input type="number" id="end-range" value="30">
+                    <button id="set-range-btn">適用</button>
+                    <button id="help-open-btn">？</button>
+                </div>
+                <div class="option-row">
+                    <button id="load-favorites-btn">★のみ解く (<span id="fav-count-display">0</span>)</button>
+                </div>
+            </div>
+
+            <div class="stats-display">
+                残り: <span id="remaining-count">0</span> | 
+                <span class="correct-text">正: <span id="correct-count">0</span></span> | 
+                <span class="incorrect-text">誤: <span id="incorrect-count">0</span></span>
+            </div>
+
+            <div class="card-container">
+                <div class="card" id="main-card">
+                    <div class="card-inner" id="card-inner">
+                        <div class="card-front">
+                            <div class="id-badge" id="id-badge-front">ID: --</div>
+                            <button class="fav-btn fav-toggle-btn">☆</button>
+                            <h1 id="word-display">読み込み中...</h1>
+                        </div>
+                        <div class="card-back">
+                            <div class="id-badge" id="id-badge-back">ID: --</div>
+                            <button class="fav-btn fav-toggle-btn">☆</button>
+                            <div id="meaning-display" class="meaning">意味が表示されます</div>
+                        </div>
+                    </div>
+                    
+                   <div id="result-screen" class="result-overlay hidden">
+                       <h3>一周クリア！</h3>
+                       <p id="final-stats"></p>
+                       <div class="bulk-action-row" style="margin-bottom: 15px;">
+                           <button id="fav-all-mistakes-btn" class="sub-btn" style="background: #ffc107; color: #333; font-weight: bold; width: 100%;">
+                               今回の誤答 (<span id="mistake-count-final">0</span>件) をすべて★に登録
+                           </button>
+                       </div>
+                       <div class="result-buttons">
+                           <button id="restart-btn" class="main-btn">最初から再挑戦</button>
+                           <button id="retry-mistakes-btn" class="sub-btn incorrect-btn">誤答のみ復習</button>
+                       </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button id="action-btn" class="main-btn">意味を表示</button>
+                <div id="judgment-btns" class="judgment-group">
+                    <button id="correct-btn" class="sub-btn correct-btn">わかる</button>
+                    <button id="undo-btn" class="sub-btn undo-btn">戻る</button>
+                    <button id="incorrect-btn" class="sub-btn incorrect-btn">わからない</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-list" class="view-content hidden">
+            <div class="list-header">
+                <div class="search-box">
+                    <input type="text" id="list-search" placeholder="単語・意味・IDで検索...">
+                </div>
+                <div class="filter-switch">
+                    <button id="filter-all" class="filter-btn active">すべて</button>
+                    <button id="filter-fav" class="filter-btn">星のみ</button>
+                    <button id="filter-non-fav" class="filter-btn">星以外</button>
+                </div>
+            </div>
+            <div id="word-list-container" class="word-list-scroll"></div>
+        </div>
+
+        <div id="view-settings" class="view-content hidden">
+            <div class="compact-settings">
+                <div class="setting-item-group">
+                    <div class="setting-row">
+                        <span>ダークモード</span>
+                        <button id="dark-mode-toggle-settings" class="sub-btn" style="width: auto; padding: 0 15px; height: 40px; font-size: 0.9rem;">🌙 ダークモード</button>
+                    </div>
+                    <hr>
+                    <div class="setting-row">
+                        <span>問題をシャッフルする</span>
+                        <input type="checkbox" id="shuffle-toggle" style="width: 20px; height: 20px;">
+                    </div>
+                    <hr>
+                    <div class="setting-row">
+                        <span>出題形式</span>
+                        <select id="question-mode">
+                            <option value="en-ja">英語 → 日本語</option>
+                            <option value="ja-en">日本語 → 英語</option>
+                        </select>
+                    </div>
+                    <hr>
+                    <div class="setting-row" style="margin-top: 10px;">
+                        <button id="clear-all-favs-btn" class="sub-btn" style="background: #ef4444; color: white; height: 45px; font-size: 0.95rem;">お気に入りをすべて解除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="help-tab-container">
+                    <button id="help-tab-guide" class="help-tab-btn active">使いかた</button>
+                    <button id="help-tab-update" class="help-tab-btn">更新履歴</button>
+                </div>
+                <button id="help-close-icon" class="close-icon">&times;</button>
+            </div>
+            <div id="help-guide-content">
+                <ul class="help-list">
+                    <li><strong>中央タップ/Space:</strong> カードを反転。</li>
+                    <li><strong>Enter:</strong> 「わかる」で次へ。</li>
+                    <li><strong>戻る:</strong> 何回でも前の問題へ。</li>
+                    <li><strong>星ボタン:</strong> 苦手な単語をチェック。</li>
+                </ul>
+                <div class="feedback-box">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe9FcG5hoG2-lfu0ZQgEvkcwsFOVURCvbd8HxnBQFPSIu_Drw/viewform?usp=preview" target="_blank" rel="noopener noreferrer" class="feedback-text-link">フィードバックを送る ↗</a>
+                </div>
+            </div>
+            <div id="help-update-content" class="hidden">
+                <ul class="help-list update-history">
+                    <li><strong>v1.8.2:</strong>ダークモードにした際に単語一覧の文字が白色になるよう変更</li>
+                    <li><strong>v1.8.1:</strong>星以外の単語の欄を追加</li>
+                    <li><strong>v1.8.0:</strong>タブを閉じても設定が保存されるよう変更</li>
+                </ul>
+            </div>
+            <button id="help-close-btn" class="main-btn">閉じる</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
