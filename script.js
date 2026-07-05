@@ -297,6 +297,9 @@ function updateRange() {
     currentRange = { start: s, end: e };
     
     let targetWords = allWords.filter(w => w.id >= s && w.id <= e);
+    
+    // 【重要】設定画面のチェックボックスの状態をここで正しく反映させます
+    isShuffle = document.getElementById('shuffle-toggle').checked;
     if (isShuffle) {
         targetWords.sort(() => Math.random() - 0.5);
     }
@@ -360,7 +363,10 @@ document.getElementById('load-favorites-btn').onclick = () => {
     else alert("お気に入り登録がありません。");
 };
 
-document.getElementById('shuffle-toggle').onchange = (e) => { isShuffle = e.target.checked; };
+document.getElementById('shuffle-toggle').onchange = (e) => { 
+    isShuffle = e.target.checked; 
+    saveSettings(); // チェックを切り替えた瞬間に、その状態を保存します
+};
 document.getElementById('question-mode').onchange = (e) => { 
     questionMode = e.target.value; 
     if(window.currentWord) displayWord(window.currentWord);
@@ -447,12 +453,23 @@ function saveSettings() {
 
 function loadSettings() {
     const saved = localStorage.getItem('app_settings');
+    
+    // まず画面上の最新のチェック状態を、そのままプログラムの変数（isShuffle）に強制同期します
+    const toggleEl = document.getElementById('shuffle-toggle');
+    const modeEl = document.getElementById('question-mode');
+
     if (saved) {
         const settings = JSON.parse(saved);
         isShuffle = settings.isShuffle;
         questionMode = settings.questionMode;
-        document.getElementById('shuffle-toggle').checked = isShuffle;
-        document.getElementById('question-mode').value = questionMode;
+        
+        // 記憶されている設定通りに、画面の見た目（チェック状態）を上書きして固定します
+        if (toggleEl) toggleEl.checked = isShuffle;
+        if (modeEl) modeEl.value = questionMode;
+    } else {
+        // まだデータがない場合は、現在の画面の見た目を正とします
+        if (toggleEl) isShuffle = toggleEl.checked;
+        if (modeEl) questionMode = modeEl.value;
     }
 }
 
