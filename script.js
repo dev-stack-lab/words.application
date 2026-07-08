@@ -504,6 +504,9 @@ document.querySelectorAll('.material-card-btn').forEach(btn => {
             csvFile = 'eitangoex.csv';
             favKey = 'fav_ids_ex1';
             progressKey = 'progress_ex1';
+        } else if (material === 'kikutan') {
+            csvFile = 'kikutansuper.csv';
+            favkey = 'fav_ids_kikutan';
         }
 
         window.currentProgressKey = progressKey;
@@ -551,8 +554,11 @@ document.querySelectorAll('.material-card-btn').forEach(btn => {
             csvFile = 'eitangoex.csv';
             favKey = 'fav_ids_ex1';
             progressKey = 'progress_ex1';
+        } else if (material === 'kikutan') {
+            csvFile = 'kikutansuper.csv';
+            favKey = 'fav_ids_kikutan';
+            progressKey = 'progress_kikutan';
         }
-
         window.currentProgressKey = progressKey;
         loadCSV(csvFile, favKey);
     };
