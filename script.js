@@ -292,13 +292,30 @@ document.getElementById('restart-btn').onclick = () => updateRange();
 document.getElementById('retry-mistakes-btn').onclick = () => startSession(mistakeWords);
 
 function updateRange() {
-    const s = parseInt(document.getElementById('start-range').value);
-    const e = parseInt(document.getElementById('end-range').value);
-    currentRange = { start: s, end: e };
+    let targetWords = [];
+    const weekSelect = document.getElementById('kikutan-week-select');
+    const currentMaterial = localStorage.getItem('selected_material_key');
+
+    // キクタンかつWeekが選ばれている場合の処理
+    if (currentMaterial === 'kikutan' && weekSelect && weekSelect.value !== 'all') {
+        const weekNum = parseInt(weekSelect.value);
+        const startId = (weekNum - 1) * 112 + 1;
+        const endId = weekNum * 112;
+        
+        // 画面の入力欄の数値も同期させておきます
+        if (document.getElementById('start-range')) document.getElementById('start-range').value = startId;
+        if (document.getElementById('end-range')) document.getElementById('end-range').value = endId;
+        
+        currentRange = { start: startId, end: endId };
+        targetWords = allWords.filter(w => w.id >= startId && w.id <= endId);
+    } else {
+        // 通常の範囲指定処理（今まで通り）
+        const s = parseInt(document.getElementById('start-range').value);
+        const e = parseInt(document.getElementById('end-range').value);
+        currentRange = { start: s, end: e };
+        targetWords = allWords.filter(w => w.id >= s && w.id <= e);
+    }
     
-    let targetWords = allWords.filter(w => w.id >= s && w.id <= e);
-    
-    // 【重要】設定画面のチェックボックスの状態をここで正しく反映させます
     isShuffle = document.getElementById('shuffle-toggle').checked;
     if (isShuffle) {
         targetWords.sort(() => Math.random() - 0.5);
@@ -523,12 +540,11 @@ document.getElementById('tab-back-to-menu').onclick = () => {
     document.getElementById('view-select-material').classList.remove('hidden');
 };
 
-// 教材ボタンが押されたときの処理（選択した教材の保存を追加）
+// 教材ボタンが押されたときの処理（キクタンとWeekメニュー制御を追加）
 document.querySelectorAll('.material-card-btn').forEach(btn => {
     btn.onclick = () => {
         const material = btn.getAttribute('data-material');
         
-        // 次回リロード時に自動で開くため、選択した教材名を保存します
         localStorage.setItem('selected_material_key', material);
         
         document.getElementById('view-select-material').classList.add('hidden');
@@ -542,6 +558,14 @@ document.querySelectorAll('.material-card-btn').forEach(btn => {
         let favKey = '';
         let progressKey = '';
 
+        // キクタン専用メニューの表示・非表示制御
+        const weekContainer = document.getElementById('kikutan-week-container');
+        if (material === 'kikutan') {
+            if (weekContainer) weekContainer.classList.remove('hidden');
+        } else {
+            if (weekContainer) weekContainer.classList.add('hidden');
+        }
+
         if (material === 'shistan') {
             csvFile = 'english_only.csv';
             favKey = 'fav_ids_shistan';
@@ -554,31 +578,13 @@ document.querySelectorAll('.material-card-btn').forEach(btn => {
             csvFile = 'eitangoex.csv';
             favKey = 'fav_ids_ex1';
             progressKey = 'progress_ex1';
-        } else if (material === 'kikutan') {
+        } else if (material === 'kikutan') { // キクタンの条件を追加
             csvFile = 'kikutansuper.csv';
             favKey = 'fav_ids_kikutan';
             progressKey = 'progress_kikutan';
         }
+
         window.currentProgressKey = progressKey;
         loadCSV(csvFile, favKey);
     };
 });
-
-// === 追加：起動時またはリロード時に前回の教材を自動復元する処理 ===
-(function handleAutoLoad() {
-    const savedMaterial = localStorage.getItem('selected_material_key');
-    
-    if (savedMaterial) {
-        // 前回の記憶がある場合は、該当する教材ボタンのクリックイベントを自動で実行します
-        const targetBtn = document.querySelector(`.material-card-btn[data-material="${savedMaterial}"]`);
-        if (targetBtn) {
-            targetBtn.click();
-            return;
-        }
-    }
-    
-    // 前回の記憶がない場合のみ、初期状態として教材選択画面を表示します
-    document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
-    document.getElementById('view-select-material').classList.remove('hidden');
-    document.querySelector('.tab-menu').classList.add('hidden'); 
-})();
