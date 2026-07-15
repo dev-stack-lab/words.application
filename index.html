@@ -40,6 +40,23 @@
                     <button id="set-range-btn">適用</button>
                     <button id="help-open-btn">？</button>
                 </div>
+                <!-- キクタン専用のWeek選択メニュー（初期状態は隠しておきます） -->
+<div id="kikutan-week-container" class="hidden" style="margin-top: 10px; text-align: center;">
+    <label for="kikutan-week-select" style="font-size: 0.9rem; margin-right: 5px;">Week選択:</label>
+    <select id="kikutan-week-select" style="padding: 5px 10px; border-radius: 5px; border: 1px solid #ccc;">
+        <option value="all">すべて（範囲指定に従う）</option>
+        <option value="1">Week 1 (1-112)</option>
+        <option value="2">Week 2 (113-224)</option>
+        <option value="3">Week 3 (225-336)</option>
+        <option value="4">Week 4 (337-448)</option>
+        <option value="5">Week 5 (449-560)</option>
+        <option value="6">Week 6 (561-672)</option>
+        <option value="7">Week 7 (673-784)</option>
+        <option value="8">Week 8 (785-896)</option>
+        <option value="9">Week 9 (897-1008)</option>
+        <option value="10">Week 10 (1009-1120)</option>
+    </select>
+</div>
                 <div class="option-row">
                     <button id="load-favorites-btn">★のみ解く (<span id="fav-count-display">0</span>)</button>
                 </div>
@@ -81,7 +98,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="button-container">
                 <button id="action-btn" class="main-btn">意味を表示</button>
                 <div id="judgment-btns" class="judgment-group">
