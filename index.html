@@ -15,13 +15,16 @@
                     <span class="material-name">システム英単語</span>
                 </button>
                 <button class="material-card-btn" data-material="kobun">
-                    <span class="material-name">古文単語315</span>
+                    <span class="material-name">古文単語</span>
                 </button>
                 <button class="material-card-btn" data-material="ex1">
                     <span class="material-name">英検準1級英熟語EX</span>
                 </button>
                 <button class="material-card-btn" data-material="kikutan">
                     <span class="material-name">キクタンsuper12000語レベル</span>
+                </button>
+                <button class="material-card-btn" data-material="eijukugo">
+                   <span class="material-name">速読英熟語</span>
                 </button>
             </div>
         </div>
@@ -59,14 +62,16 @@
                     </select>
                 </div>
                 
+                <!-- お気に入り学習用のボタンエリア（見た目を統一） -->
                 <!-- お気に入り学習用のボタンエリア -->
-                <!-- お気に入り学習用のボタンエリア（横並び配置） -->
-<div class="option-row" style="margin-top: 12px; display: flex; flex-direction: row; gap: 8px; width: 100%;">
-    <button id="load-favorites-btn" style="flex: 1; margin: 0; padding: 10px 6px; font-size: 0.85rem; white-space: nowrap;">★のみ解く (<span id="fav-count-display">0</span>)</button>
-    <button id="load-range-favorites-btn" class="action-btn" style="flex: 1; margin: 0; background-color: #4A90E2; color: white; border: none; border-radius: 8px; padding: 10px 6px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">指定範囲内の★のみ解く</button>
+<div class="option-row" style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px; width: 100%;">
+    <button id="load-favorites-btn" style="width: 100%; margin: 0;">★のみ解く (<span id="fav-count-display">0</span>)</button>
+    
+    <!-- こちらのボタンのstyleに border: none; と border-radius: 8px; を追加します -->
+    <button id="load-range-favorites-btn" class="action-btn" style="width: 100%; margin: 0; background-color: #4A90E2; color: white; border: none; border-radius: 8px; padding: 10px; cursor: pointer;">指定範囲内の★のみ解く</button>
 </div>
-            </div>
-            
+           
+                 
             <div class="stats-display">
                 残り: <span id="remaining-count">0</span> | 
                 <span class="correct-text">正: <span id="correct-count">0</span></span> | 
@@ -88,18 +93,18 @@
                         </div>
                     </div>
                     
-                    <div id="result-screen" class="result-overlay hidden">
-                        <h3>一周クリア！</h3>
-                        <p id="final-stats"></p>
-                        <div class="bulk-action-row" style="margin-bottom: 15px;">
-                            <button id="fav-all-mistakes-btn" class="sub-btn" style="background: #ffc107; color: #333; font-weight: bold; width: 100%;">
-                                今回の誤答 (<span id="mistake-count-final">0</span>件) をすべて★に登録
-                            </button>
-                        </div>
-                        <div class="result-buttons">
-                            <button id="restart-btn" class="main-btn">最初から再挑戦</button>
-                            <button id="retry-mistakes-btn" class="sub-btn incorrect-btn">誤答のみ復習</button>
-                        </div>
+                   <div id="result-screen" class="result-overlay hidden">
+                       <h3>一周クリア！</h3>
+                       <p id="final-stats"></p>
+                       <div class="bulk-action-row" style="margin-bottom: 15px;">
+                           <button id="fav-all-mistakes-btn" class="sub-btn" style="background: #ffc107; color: #333; font-weight: bold; width: 100%;">
+                               今回の誤答 (<span id="mistake-count-final">0</span>件) をすべて★に登録
+                           </button>
+                       </div>
+                       <div class="result-buttons">
+                           <button id="restart-btn" class="main-btn">最初から再挑戦</button>
+                           <button id="retry-mistakes-btn" class="sub-btn incorrect-btn">誤答のみ復習</button>
+                       </div>
                     </div>
                 </div>
             </div>
@@ -179,14 +184,14 @@
             </div>
             <div id="help-update-content" class="hidden">
                 <ul class="help-list update-history">
-                    <li><strong>v1.8.3:</strong>★をつけた単語を範囲指定できるよう変更</li>
                     <li><strong>v1.8.2:</strong>ダークモードにした際に単語一覧の文字が白色になるよう変更</li>
                     <li><strong>v1.8.1:</strong>星以外の単語の欄を追加</li>
+                    <li><strong>v1.8.0:</strong>タブを閉じても設定が保存されるよう変更</li>
                 </ul>
             </div>
             <button id="help-close-btn" class="main-btn">閉じる</button>
         </div>
     </div>
-    <script src="script.js?v=2.0"></script>
+    <script src="script.js"></script>
 </body>
 </html>
