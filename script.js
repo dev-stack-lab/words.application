@@ -71,7 +71,6 @@ function loadProgress() {
         const progress = JSON.parse(saved);
         
         currentRange = progress.currentRange || { start: 1, end: allWords.length };
-        // HTMLの要素名が start-range / end-range であることを考慮
         if(document.getElementById('start-range')) document.getElementById('start-range').value = currentRange.start;
         if(document.getElementById('end-range')) document.getElementById('end-range').value = currentRange.end;
 
@@ -117,7 +116,6 @@ async function loadCSV(csvFile, favKey) {
         updateFavCount();
         loadSettings(); 
 
-        // CSVのデータが完全に作り終わった後に進捗を読み込みます
         if (!loadProgress()) {
             updateRange();
         }
@@ -133,13 +131,11 @@ function startSession(list) {
     historyStack = []; 
     forwardStack = [];
     
-    // 【重要】間違えた問題の再挑戦時にも、シャッフルの設定をチェックして反映させます
     isShuffle = document.getElementById('shuffle-toggle').checked;
     if (isShuffle) {
         unlearnedWords.sort(() => Math.random() - 0.5);
     }
     
-    // 進行情報を初期化して構築
     shuffledIds = unlearnedWords.map(w => w.id);
     currentIndex = 0;
     correctCount = 0;
@@ -160,15 +156,12 @@ function displayWord(wordObj) {
     document.getElementById('id-badge-front').textContent = `ID: ${wordObj.id}`;
     document.getElementById('id-badge-back').textContent = `ID: ${wordObj.id}`;
     
-    // 「／」を改行タグ <br> に置き換える処理
     const formattedMeaning = wordObj.meaning.replace(/／/g, '<br>');
     
     if (questionMode === 'en-ja') {
         wordDisplay.textContent = wordObj.word;
-        // 改行タグを認識させるため、meaningDisplay だけ innerHTML に変更します
         meaningDisplay.innerHTML = formattedMeaning;
     } else {
-        // クイズモードが「日→英」の場合の処理
         wordDisplay.innerHTML = formattedMeaning;
         meaningDisplay.textContent = wordObj.word;
     }
@@ -302,20 +295,17 @@ function updateRange() {
     const weekSelect = document.getElementById('kikutan-week-select');
     const currentMaterial = localStorage.getItem('selected_material_key');
 
-    // キクタンかつWeekが選ばれている場合の処理
     if (currentMaterial === 'kikutan' && weekSelect && weekSelect.value !== 'all') {
         const weekNum = parseInt(weekSelect.value);
         const startId = (weekNum - 1) * 112 + 1;
         const endId = weekNum * 112;
         
-        // 画面の入力欄の数値も同期させておきます
         if (document.getElementById('start-range')) document.getElementById('start-range').value = startId;
         if (document.getElementById('end-range')) document.getElementById('end-range').value = endId;
         
         currentRange = { start: startId, end: endId };
         targetWords = allWords.filter(w => w.id >= startId && w.id <= endId);
     } else {
-        // 通常の範囲指定処理（今まで通り）
         const s = parseInt(document.getElementById('start-range').value);
         const e = parseInt(document.getElementById('end-range').value);
         currentRange = { start: s, end: e };
@@ -385,16 +375,14 @@ document.getElementById('load-favorites-btn').onclick = () => {
     if (favs.length > 0) startSession(favs);
     else alert("お気に入り登録がありません。");
 };
+
 document.getElementById('load-range-favorites-btn').onclick = () => {
-    // 現在入力されている範囲の数値を取得します
     const s = parseInt(document.getElementById('start-range').value);
     const e = parseInt(document.getElementById('end-range').value);
 
-    // 1. 指定された範囲内、かつ 2. お気に入りに登録されている単語、で絞り込みます
     const rangeFavs = allWords.filter(w => w.id >= s && w.id <= e && favoriteIds.includes(w.id));
     
     if (rangeFavs.length > 0) {
-        // 現在の範囲設定を進捗保存用に更新しておく
         currentRange = { start: s, end: e };
         startSession(rangeFavs);
     } else {
@@ -404,7 +392,7 @@ document.getElementById('load-range-favorites-btn').onclick = () => {
 
 document.getElementById('shuffle-toggle').onchange = (e) => { 
     isShuffle = e.target.checked; 
-    saveSettings(); // チェックを切り替えた瞬間に、その状態を保存します
+    saveSettings();
 };
 document.getElementById('question-mode').onchange = (e) => { 
     questionMode = e.target.value; 
@@ -463,6 +451,7 @@ window.handleListFav = (id, btn) => {
     const activeId = document.querySelector('.filter-btn.active').id;
     if (activeId !== 'filter-all') renderWordList(); 
 };
+
 document.getElementById('help-open-btn').onclick = () => modal.classList.add('active');
 const hideM = () => { modal.classList.remove('active'); document.getElementById('help-tab-guide').click(); };
 document.getElementById('help-close-btn').onclick = hideM;
@@ -492,8 +481,6 @@ function saveSettings() {
 
 function loadSettings() {
     const saved = localStorage.getItem('app_settings');
-    
-    // まず画面上の最新のチェック状態を、そのままプログラムの変数（isShuffle）に強制同期します
     const toggleEl = document.getElementById('shuffle-toggle');
     const modeEl = document.getElementById('question-mode');
 
@@ -502,67 +489,27 @@ function loadSettings() {
         isShuffle = settings.isShuffle;
         questionMode = settings.questionMode;
         
-        // 記憶されている設定通りに、画面の見た目（チェック状態）を上書きして固定します
         if (toggleEl) toggleEl.checked = isShuffle;
         if (modeEl) modeEl.value = questionMode;
     } else {
-        // まだデータがない場合は、現在の画面の見た目を正とします
         if (toggleEl) isShuffle = toggleEl.checked;
         if (modeEl) questionMode = modeEl.value;
     }
 }
 
+// 初期化設定：教材選択画面を表示
 document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
 document.getElementById('view-select-material').classList.remove('hidden');
 document.querySelector('.tab-menu').classList.add('hidden'); 
 
-document.querySelectorAll('.material-card-btn').forEach(btn => {
-    btn.onclick = () => {
-        const material = btn.getAttribute('data-material');
-        
-        document.getElementById('view-select-material').classList.add('hidden');
-        document.getElementById('view-study').classList.remove('hidden');
-        document.querySelector('.tab-menu').classList.remove('hidden');
-        
-        document.getElementById('result-screen').classList.add('hidden');
-        document.querySelector('.button-container').classList.remove('hidden');
-        
-        let csvFile = '';
-        let favKey = '';
-        let progressKey = '';
-
-        if (material === 'shistan') {
-            csvFile = 'english_only.csv';
-            favKey = 'fav_ids_shistan';
-            progressKey = 'progress_shistan';
-        } else if (material === 'kobun') {
-            csvFile = 'words.1.csv';
-            favKey = 'fav_ids_kobun';
-            progressKey = 'progress_kobun';
-        } else if (material === 'ex1') {
-            csvFile = 'eitangoex.csv';
-            favKey = 'fav_ids_ex1';
-            progressKey = 'progress_ex1';
-        } else if (material === 'kikutan') {
-            csvFile = 'kikutansuper.csv';
-            favkey = 'fav_ids_kikutan';
-        }
-
-        window.currentProgressKey = progressKey;
-        loadCSV(csvFile, favKey);
-    };
-});
-// === 追加：教材変更ボタンが押されたときの処理 ===
+// 教材変更ボタンが押されたときの処理
 document.getElementById('tab-back-to-menu').onclick = () => {
-    // すべてのコンテンツ画面を隠す
     document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
-    // タブメニュー自体も隠す
     document.querySelector('.tab-menu').classList.add('hidden');
-    // 教材選択画面だけを表示する
     document.getElementById('view-select-material').classList.remove('hidden');
 };
 
-// 教材ボタンが押されたときの処理（キクタンとWeekメニュー制御を追加）
+// 教材カードボタンが押されたときの処理（単一化・Week表示制御付き）
 document.querySelectorAll('.material-card-btn').forEach(btn => {
     btn.onclick = () => {
         const material = btn.getAttribute('data-material');
@@ -580,12 +527,12 @@ document.querySelectorAll('.material-card-btn').forEach(btn => {
         let favKey = '';
         let progressKey = '';
 
-        // キクタン専用メニューの表示・非表示制御（デザイン維持用）
+        // キクタン専用メニューの表示・非表示制御
         const weekContainer = document.getElementById('kikutan-week-container');
         if (weekContainer) {
             if (material === 'kikutan') {
                 weekContainer.classList.remove('hidden');
-                weekContainer.style.display = 'flex'; // 範囲指定と同じ横並びレイアウトを保ちます
+                weekContainer.style.display = 'flex';
             } else {
                 weekContainer.classList.add('hidden');
                 weekContainer.style.display = 'none';
