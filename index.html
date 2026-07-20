@@ -60,10 +60,11 @@
                 </div>
                 
                 <!-- お気に入り学習用のボタンエリア -->
-                <div class="option-row" style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px; width: 100%;">
-                    <button id="load-favorites-btn" style="width: 100%; margin: 0;">★のみ解く (<span id="fav-count-display">0</span>)</button>
-                    <button id="load-range-favorites-btn" class="action-btn" style="width: 100%; margin: 0; background-color: #4A90E2; color: white; border: none; border-radius: 8px; padding: 10px; cursor: pointer;">指定範囲内の★のみ解く</button>
-                </div>
+                <!-- お気に入り学習用のボタンエリア（横並び配置） -->
+<div class="option-row" style="margin-top: 12px; display: flex; flex-direction: row; gap: 8px; width: 100%;">
+    <button id="load-favorites-btn" style="flex: 1; margin: 0; padding: 10px 6px; font-size: 0.85rem; white-space: nowrap;">★のみ解く (<span id="fav-count-display">0</span>)</button>
+    <button id="load-range-favorites-btn" class="action-btn" style="flex: 1; margin: 0; background-color: #4A90E2; color: white; border: none; border-radius: 8px; padding: 10px 6px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">指定範囲内の★のみ解く</button>
+</div>
             </div>
             
             <div class="stats-display">
