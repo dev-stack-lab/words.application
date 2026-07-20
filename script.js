@@ -133,6 +133,12 @@ function startSession(list) {
     historyStack = []; 
     forwardStack = [];
     
+    // 【重要】間違えた問題の再挑戦時にも、シャッフルの設定をチェックして反映させます
+    isShuffle = document.getElementById('shuffle-toggle').checked;
+    if (isShuffle) {
+        unlearnedWords.sort(() => Math.random() - 0.5);
+    }
+    
     // 進行情報を初期化して構築
     shuffledIds = unlearnedWords.map(w => w.id);
     currentIndex = 0;
@@ -379,6 +385,22 @@ document.getElementById('load-favorites-btn').onclick = () => {
     if (favs.length > 0) startSession(favs);
     else alert("お気に入り登録がありません。");
 };
+document.getElementById('load-range-favorites-btn').onclick = () => {
+    // 現在入力されている範囲の数値を取得します
+    const s = parseInt(document.getElementById('start-range').value);
+    const e = parseInt(document.getElementById('end-range').value);
+
+    // 1. 指定された範囲内、かつ 2. お気に入りに登録されている単語、で絞り込みます
+    const rangeFavs = allWords.filter(w => w.id >= s && w.id <= e && favoriteIds.includes(w.id));
+    
+    if (rangeFavs.length > 0) {
+        // 現在の範囲設定を進捗保存用に更新しておく
+        currentRange = { start: s, end: e };
+        startSession(rangeFavs);
+    } else {
+        alert("指定された範囲内にお気に入り登録された単語がありません。");
+    }
+};
 
 document.getElementById('shuffle-toggle').onchange = (e) => { 
     isShuffle = e.target.checked; 
@@ -558,12 +580,16 @@ document.querySelectorAll('.material-card-btn').forEach(btn => {
         let favKey = '';
         let progressKey = '';
 
-        // キクタン専用メニューの表示・非表示制御
+        // キクタン専用メニューの表示・非表示制御（デザイン維持用）
         const weekContainer = document.getElementById('kikutan-week-container');
-        if (material === 'kikutan') {
-            if (weekContainer) weekContainer.classList.remove('hidden');
-        } else {
-            if (weekContainer) weekContainer.classList.add('hidden');
+        if (weekContainer) {
+            if (material === 'kikutan') {
+                weekContainer.classList.remove('hidden');
+                weekContainer.style.display = 'flex'; // 範囲指定と同じ横並びレイアウトを保ちます
+            } else {
+                weekContainer.classList.add('hidden');
+                weekContainer.style.display = 'none';
+            }
         }
 
         if (material === 'shistan') {
@@ -578,7 +604,7 @@ document.querySelectorAll('.material-card-btn').forEach(btn => {
             csvFile = 'eitangoex.csv';
             favKey = 'fav_ids_ex1';
             progressKey = 'progress_ex1';
-        } else if (material === 'kikutan') { // キクタンの条件を追加
+        } else if (material === 'kikutan') {
             csvFile = 'kikutansuper.csv';
             favKey = 'fav_ids_kikutan';
             progressKey = 'progress_kikutan';
