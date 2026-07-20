@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>単語帳</title>
+    <title>シス単</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -40,28 +40,35 @@
                     <button id="set-range-btn">適用</button>
                     <button id="help-open-btn">？</button>
                 </div>
-                <!-- キクタン専用のWeek選択メニュー（初期状態は隠しておきます） -->
-<div id="kikutan-week-container" class="hidden" style="margin-top: 10px; text-align: center;">
-    <label for="kikutan-week-select" style="font-size: 0.9rem; margin-right: 5px;">Week選択:</label>
-    <select id="kikutan-week-select" style="padding: 5px 10px; border-radius: 5px; border: 1px solid #ccc;">
-        <option value="all">すべて（範囲指定に従う）</option>
-        <option value="1">Week 1 (1-112)</option>
-        <option value="2">Week 2 (113-224)</option>
-        <option value="3">Week 3 (225-336)</option>
-        <option value="4">Week 4 (337-448)</option>
-        <option value="5">Week 5 (449-560)</option>
-        <option value="6">Week 6 (561-672)</option>
-        <option value="7">Week 7 (673-784)</option>
-        <option value="8">Week 8 (785-896)</option>
-        <option value="9">Week 9 (897-1008)</option>
-        <option value="10">Week 10 (1009-1120)</option>
-    </select>
-</div>
-                <div class="option-row">
-                    <button id="load-favorites-btn">★のみ解く (<span id="fav-count-display">0</span>)</button>
+                
+                <!-- キクタン専用のWeek選択メニュー -->
+                <div id="kikutan-week-container" class="range-setting hidden" style="margin-top: 12px; border-top: 1px dashed #ddd; padding-top: 12px;">
+                    <span class="range-label" style="font-size: 0.9rem; margin-right: 8px;">Week選択:</span>
+                    <select id="kikutan-week-select" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.9rem; background-color: #fff; cursor: pointer; outline: none; flex: 1;">
+                        <option value="all">すべて（範囲指定に従う）</option>
+                        <option value="1">Week 1 (1-112)</option>
+                        <option value="2">Week 2 (113-224)</option>
+                        <option value="3">Week 3 (225-336)</option>
+                        <option value="4">Week 4 (337-448)</option>
+                        <option value="5">Week 5 (449-560)</option>
+                        <option value="6">Week 6 (561-672)</option>
+                        <option value="7">Week 7 (73-784)</option>
+                        <option value="8">Week 8 (785-896)</option>
+                        <option value="9">Week 9 (897-1008)</option>
+                        <option value="10">Week 10 (1009-1120)</option>
+                    </select>
                 </div>
-            </div>
-
+                
+                <!-- お気に入り学習用のボタンエリア（見た目を統一） -->
+                <!-- お気に入り学習用のボタンエリア -->
+<div class="option-row" style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px; width: 100%;">
+    <button id="load-favorites-btn" style="width: 100%; margin: 0;">★のみ解く (<span id="fav-count-display">0</span>)</button>
+    
+    <!-- こちらのボタンのstyleに border: none; と border-radius: 8px; を追加します -->
+    <button id="load-range-favorites-btn" class="action-btn" style="width: 100%; margin: 0; background-color: #4A90E2; color: white; border: none; border-radius: 8px; padding: 10px; cursor: pointer;">指定範囲内の★のみ解く</button>
+</div>
+           
+                 
             <div class="stats-display">
                 残り: <span id="remaining-count">0</span> | 
                 <span class="correct-text">正: <span id="correct-count">0</span></span> | 
@@ -169,14 +176,14 @@
                     <li><strong>星ボタン:</strong> 苦手な単語をチェック。</li>
                 </ul>
                 <div class="feedback-box">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe9FcG5hoG2-lfu0ZQgEvkcwsFOVURCvbd8HxnBQFPSIu_Drw/viewform?usp=preview" target="_blank" rel="noopener noreferrer" class="feedback-text-link">フィードバックを送る ↗</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHSGnIFEd-v2-WndlVyD83elhbhNm5VcRY4HtlsZS0eN50Bw/viewform?usp=preview" target="_blank" rel="noopener noreferrer" class="feedback-text-link">フィードバックを送る ↗</a>
                 </div>
             </div>
             <div id="help-update-content" class="hidden">
                 <ul class="help-list update-history">
-                    <li><strong>v1.8.3:</strong>「キクタンsuper 12000語レベル」を追加</li>
                     <li><strong>v1.8.2:</strong>ダークモードにした際に単語一覧の文字が白色になるよう変更</li>
                     <li><strong>v1.8.1:</strong>星以外の単語の欄を追加</li>
+                    <li><strong>v1.8.0:</strong>タブを閉じても設定が保存されるよう変更</li>
                 </ul>
             </div>
             <button id="help-close-btn" class="main-btn">閉じる</button>
