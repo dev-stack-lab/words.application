@@ -509,7 +509,7 @@ document.getElementById('tab-back-to-menu').onclick = () => {
     document.getElementById('view-select-material').classList.remove('hidden');
 };
 
-// 教材カードボタンが押されたときの処理（単一化・Week表示制御付き）
+// 教材カードボタンが押されたときの処理
 document.querySelectorAll('.material-card-btn').forEach(btn => {
     btn.onclick = () => {
         const material = btn.getAttribute('data-material');
@@ -555,6 +555,10 @@ document.querySelectorAll('.material-card-btn').forEach(btn => {
             csvFile = 'kikutansuper.csv';
             favKey = 'fav_ids_kikutan';
             progressKey = 'progress_kikutan';
+        } else if (material === 'eijukugo') {
+            csvFile = 'eijukugo.csv';
+            favKey = 'fav_ids_eijukugo';
+            progressKey = 'progress_eijukugo';
         }
 
         window.currentProgressKey = progressKey;
