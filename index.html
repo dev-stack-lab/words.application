@@ -7,6 +7,28 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 左上のハンバーガーボタン -->
+    <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="メニューを開く">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- サイドメニューのオーバーレイと本体 -->
+    <div id="menu-overlay" class="menu-overlay"></div>
+    <nav id="side-menu" class="side-menu">
+        <div class="side-menu-header">
+            <h3>メニュー</h3>
+            <button id="menu-close-btn" class="close-icon">&times;</button>
+        </div>
+        <div class="tab-menu tab-menu-vertical">
+            <button id="tab-back-to-menu" class="tab-btn">教材変更</button>
+            <button id="tab-study" class="tab-btn active">学習する</button>
+            <button id="tab-list" class="tab-btn">単語一覧</button>
+            <button id="tab-settings" class="tab-btn">設定</button>
+        </div>
+    </nav>
+
     <div class="container">
         <div id="view-select-material" class="view-content">
             <h2 class="select-title">教材を選択してください</h2>
@@ -15,7 +37,7 @@
                     <span class="material-name">システム英単語</span>
                 </button>
                 <button class="material-card-btn" data-material="kobun">
-                    <span class="material-name">古文単語</span>
+                    <span class="material-name">古文単語315</span>
                 </button>
                 <button class="material-card-btn" data-material="ex1">
                     <span class="material-name">英検準1級英熟語EX</span>
@@ -28,24 +50,18 @@
                 </button>
             </div>
         </div>
-        <div class="tab-menu">
-            <button id="tab-back-to-menu" class="tab-btn">教材変更</button>
-            <button id="tab-study" class="tab-btn active">学習する</button>
-            <button id="tab-list" class="tab-btn">単語一覧</button>
-            <button id="tab-settings" class="tab-btn">設定</button>
-        </div>
 
-        <div id="view-study" class="view-content">
+        <div id="view-study" class="view-content hidden">
             <div class="compact-settings">
                 <div class="range-row">
                     <input type="number" id="start-range" value="1"> 〜 
-                    <input type="number" id="end-range" value="30">
+                    <input type="number" id="end-range" value="112">
                     <button id="set-range-btn">適用</button>
                     <button id="help-open-btn">？</button>
                 </div>
                 
                 <!-- キクタン専用のWeek選択メニュー -->
-                <div id="kikutan-week-container" class="range-setting hidden" style="margin-top: 12px; border-top: 1px dashed #ddd; padding-top: 12px;">
+                <div id="kikutan-week-container" class="range-setting hidden" style="margin-top: 10px; border-top: 1px dashed #ddd; padding-top: 10px;">
                     <span class="range-label" style="font-size: 0.9rem; margin-right: 8px;">Week選択:</span>
                     <select id="kikutan-week-select" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.9rem; background-color: #fff; cursor: pointer; outline: none; flex: 1;">
                         <option value="all">すべて（範囲指定に従う）</option>
@@ -55,25 +71,33 @@
                         <option value="4">Week 4 (337-448)</option>
                         <option value="5">Week 5 (449-560)</option>
                         <option value="6">Week 6 (561-672)</option>
-                        <option value="7">Week 7 (673-784)</option>
+                        <option value="7">Week 7 (73-784)</option>
                         <option value="8">Week 8 (785-896)</option>
                         <option value="9">Week 9 (897-1008)</option>
                         <option value="10">Week 10 (1009-1120)</option>
                     </select>
                 </div>
                 
-                <!-- お気に入り学習用のボタンエリア（横並び配置） -->
-                <div class="option-row" style="margin-top: 12px; display: flex; flex-direction: row; gap: 8px; width: 100%;">
-                    <button id="load-favorites-btn" style="flex: 1; margin: 0; padding: 10px 6px; font-size: 0.85rem; white-space: nowrap;">★のみ解く (<span id="fav-count-display">0</span>)</button>
-                    <button id="load-range-favorites-btn" class="action-btn" style="flex: 1; margin: 0; background-color: #4A90E2; color: white; border: none; border-radius: 8px; padding: 10px 6px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">指定範囲内の★のみ解く</button>
+                <!-- お気に入り学習用のボタンエリア -->
+                <div class="option-row" style="margin-top: 10px; display: flex; flex-direction: row; gap: 8px; width: 100%;">
+                    <button id="load-favorites-btn" style="flex: 1; margin: 0; padding: 8px 6px; font-size: 0.85rem; white-space: nowrap;">★のみ解く (<span id="fav-count-display">0</span>)</button>
+                    <button id="load-range-favorites-btn" class="action-btn" style="flex: 1; margin: 0; background-color: #4A90E2; color: white; border: none; border-radius: 8px; padding: 8px 6px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">指定範囲内の★のみ解く</button>
+                </div>
+
+                <!-- コンパクト化された個数指定学習行 -->
+                <div class="fav-count-compact-row">
+                    <span class="fav-count-label">★から</span>
+                    <input type="number" id="fav-study-count-input" class="compact-input" value="10" min="1">
+                    <span class="fav-count-label">個ランダム学習</span>
+                    <button id="load-fav-count-btn" class="compact-fav-btn">スタート</button>
                 </div>
             </div>
             
             <div class="stats-display">
-                残り: <span id="remaining-count">0</span> | 
-                <span class="correct-text">正: <span id="correct-count">0</span></span> | 
-                <span class="incorrect-text">誤: <span id="incorrect-count">0</span></span>
-            </div>
+    <div>残り <span id="remaining-count">0</span></div>
+    <div class="correct-text">正 <span id="correct-count">0</span></div>
+    <div class="incorrect-text">誤 <span id="incorrect-count">0</span></div>
+</div>
 
             <div class="card-container">
                 <div class="card" id="main-card">
@@ -120,6 +144,7 @@
             <div class="list-header">
                 <div class="search-box">
                     <input type="text" id="list-search" placeholder="単語・意味・IDで検索...">
+                    <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="検索文字をクリア">&times;</button>
                 </div>
                 <div class="filter-switch">
                     <button id="filter-all" class="filter-btn active">すべて</button>
@@ -151,8 +176,16 @@
                         </select>
                     </div>
                     <hr>
-                    <div class="setting-row" style="margin-top: 10px;">
-                        <button id="clear-all-favs-btn" class="sub-btn" style="background: #ef4444; color: white; height: 45px; font-size: 0.95rem;">お気に入りをすべて解除</button>
+                    <div class="settings-group">
+                        <h3 class="settings-title">お気に入り管理</h3>
+                        <div class="btn-group-vertical">
+                            <button id="clear-all-favs-btn" class="btn btn-danger-outline">
+                                すべてのお気に入りを解除
+                            </button>
+                            <button id="clear-range-favs-btn" class="btn btn-danger-outline">
+                                指定範囲のお気に入りを解除
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,9 +214,10 @@
             </div>
             <div id="help-update-content" class="hidden">
                 <ul class="help-list update-history">
-                    <li><strong>v1.8.4:</strong>速読英熟語を追加</li>
-                    <li><strong>v1.8.3:</strong>★をつけた単語を範囲指定できるよう変更</li>
-                    <li><strong>v1.8.2:</strong>ダークモードにした際に単語一覧の文字が白色になるよう変更</li>
+                    <li><strong>v1.8.7:</strong>一部デザインを変更</li>
+                    <li><strong>v1.8.6:</strong>お気に入りの中から問題を出題できる機能を追加</li>
+                    <li><strong>v1.8.5:</strong>メニューを追加</li>
+                    <li><strong>v1.8.4:</strong>お気に入りの解除を範囲指定できるよう変更</li>
                 </ul>
             </div>
             <button id="help-close-btn" class="main-btn">閉じる</button>
