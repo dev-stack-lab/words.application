@@ -305,3 +305,507 @@ body.dark-mode .material-name {
 body.dark-mode .material-card-btn:hover {
     border-color: #3b82f6 !important;
 }
+/* モダンスタイルの設定グループ */
+.settings-group {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 16px;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .settings-group {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: rgba(51, 65, 85, 0.5);
+}
+
+.settings-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+body.dark-mode .settings-title {
+    color: #94a3b8;
+}
+
+/* 縦並びのボタン配置 */
+.btn-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* モダンなアウトライン危険ボタン（解除系ボタン） */
+.btn-danger-outline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+    border: 1.5px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-danger-outline:hover {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+.btn-danger-outline:active {
+    transform: translateY(0);
+}
+
+.btn-icon {
+    font-size: 1.1rem;
+}
+
+/* 個数指定学習のレイアウト */
+.fav-count-study-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+@media (min-width: 480px) {
+    .fav-count-study-container {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.input-with-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modern-input {
+    width: 90px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: #1e293b;
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.modern-input:focus {
+    border-color: #6366f1;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+body.dark-mode .modern-input {
+    color: #f8fafc;
+    background: #0f172a;
+    border-color: #334155;
+}
+
+.input-unit {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+body.dark-mode .input-unit {
+    color: #94a3b8;
+}
+
+/* プライマリボタン（モダン風） */
+.btn-primary-modern {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.btn-primary-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.btn-primary-modern:active {
+    transform: translateY(0);
+}
+
+/* ハンバーガーボタン（画面左上固定） */
+.menu-toggle-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    width: 42px;
+    height: 42px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.menu-toggle-btn span {
+    width: 20px;
+    height: 2px;
+    background-color: #334155;
+    border-radius: 2px;
+}
+
+body.dark-mode .menu-toggle-btn {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .menu-toggle-btn span {
+    background-color: #f8fafc;
+}
+
+/* ハンバーガーボタン（画面左上固定） */
+.menu-toggle-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    width: 42px;
+    height: 42px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.menu-toggle-btn span {
+    width: 20px;
+    height: 2px;
+    background-color: #334155;
+    border-radius: 2px;
+}
+
+body.dark-mode .menu-toggle-btn {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .menu-toggle-btn span {
+    background-color: #f8fafc;
+}
+
+/* サイドメニュー構造 */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 260px;
+    height: 100%;
+    background: #ffffff;
+    z-index: 1002;
+    padding: 20px;
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-menu.active {
+    left: 0;
+}
+
+body.dark-mode .side-menu {
+    background: #0f172a;
+    color: #f8fafc;
+}
+
+.side-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.side-menu-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.close-icon {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.tab-menu-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tab-menu-vertical .tab-btn {
+    width: 100%;
+    padding: 12px 16px;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.tab-menu-vertical .tab-btn.active {
+    background: #4f46e5;
+    color: #ffffff;
+}
+
+/* 個数指定学習のコンパクトレイアウト */
+.fav-count-compact-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #e2e8f0;
+    font-size: 0.85rem;
+    color: #475569;
+}
+
+body.dark-mode .fav-count-compact-row {
+    border-top-color: #334155;
+    color: #cbd5e1;
+}
+
+.compact-input {
+    width: 55px;
+    padding: 5px 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+}
+
+.compact-fav-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #6366f1;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.compact-fav-btn:hover {
+    background-color: #4f46e5;
+}
+
+/* コンテナ全体の上面に余白を追加 */
+.container {
+    padding-top: 50px; /* 数値でお好みの余白量に調整可能です */
+}
+
+/* 上部余白に合わせてハンバーガーボタンの位置も少し調整 */
+.menu-toggle-btn {
+    top: 25px; /* 15px から 25px に少し下げて位置をバランスよく調整 */
+}
+/* ---------------------------------------
+   1. 設定エリア内のボタン・入力欄を少し大きく
+--------------------------------------- */
+/* 範囲指定の入力欄とボタン */
+.compact-settings input[type="number"] {
+    padding: 8px 10px;
+    font-size: 0.95rem;
+}
+
+.range-row button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+/* ★のみ解く などのオプションボタン */
+.option-row button {
+    padding: 10px 10px !important;
+    font-size: 0.9rem !important;
+}
+
+/* ★から〇個ランダム学習エリア */
+.fav-count-compact-row {
+    font-size: 0.9rem;
+    gap: 8px;
+}
+
+.compact-input {
+    width: 60px;
+    padding: 6px 6px;
+    font-size: 0.9rem;
+}
+
+.compact-fav-btn {
+    padding: 7px 16px;
+    font-size: 0.9rem;
+}
+
+/* ---------------------------------------
+   2. 「残り / 正 / 誤」表示（無彩色・文字サイズ拡大）
+--------------------------------------- */
+.stats-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px 0;
+    font-size: 1.05rem; /* 全体の文字サイズを大きめに設定 */
+    font-weight: 600;
+    color: #475569;
+}
+
+/* 色（背景色・文字色）を削除し、文字の大きさを際立たせる設定 */
+.stats-display div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#remaining-count,
+#correct-count,
+#incorrect-count {
+    font-size: 1.5rem; /* 数字部分をさらに大きく強調 */
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.correct-text,
+.incorrect-text {
+    color: inherit;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* ダークモード時の文字色 */
+body.dark-mode .stats-display {
+    color: #cbd5e1;
+}
+
+body.dark-mode #remaining-count,
+body.dark-mode #correct-count,
+body.dark-mode #incorrect-count {
+    color: #f8fafc;
+}
+/* 検索バーとクリア（×）ボタン */
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-box input[type="text"] {
+    width: 100%;
+    padding-right: 36px; /* ×ボタンと重ならないように右側に余白を確保 */
+}
+
+.clear-search-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.clear-search-btn:hover {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+body.dark-mode .clear-search-btn {
+    color: #64748b;
+}
+
+body.dark-mode .clear-search-btn:hover {
+    background-color: #334155;
+    color: #f8fafc;
+}
+
+/* 非表示用クラス */
+.clear-search-btn.hidden {
+    display: none;
+}
