@@ -677,40 +677,85 @@ body.dark-mode .fav-count-compact-row {
     top: 25px; /* 15px から 25px に少し下げて位置をバランスよく調整 */
 }
 /* ---------------------------------------
-   1. 設定エリア内のボタン・入力欄を少し大きく
+   上部設定エリアのコンパクト化
 --------------------------------------- */
-/* 範囲指定の入力欄とボタン */
+/* カード全体のパディング（内部余白）を縮小 */
+.compact-settings {
+    padding: 10px 12px !important;
+}
+
+/* 各行の間隔を詰める */
+.compact-settings > div {
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+}
+
+/* 範囲指定行 */
+.range-row {
+    margin-bottom: 6px !important;
+}
+
 .compact-settings input[type="number"] {
-    padding: 8px 10px;
-    font-size: 0.95rem;
+    padding: 4px 6px !important;
+    font-size: 0.85rem !important;
 }
 
 .range-row button {
-    padding: 8px 16px;
-    font-size: 0.9rem;
+    padding: 5px 12px !important;
+    font-size: 0.85rem !important;
 }
 
-/* ★のみ解く などのオプションボタン */
+/* Week選択エリア（キクタン用） */
+#kikutan-week-container {
+    margin-top: 6px !important;
+    padding-top: 6px !important;
+}
+
+#kikutan-week-select {
+    padding: 4px 8px !important;
+    font-size: 0.85rem !important;
+}
+
+/* オプションボタン（★のみ解く など） */
+.option-row {
+    margin-top: 6px !important;
+    gap: 6px !important;
+}
+
 .option-row button {
-    padding: 10px 10px !important;
-    font-size: 0.9rem !important;
+    padding: 6px 8px !important;
+    font-size: 0.8rem !important;
 }
 
-/* ★から〇個ランダム学習エリア */
+/* ★から〇個ランダム学習行 */
 .fav-count-compact-row {
-    font-size: 0.9rem;
-    gap: 8px;
+    margin-top: 6px !important;
+    padding-top: 6px !important;
+    font-size: 0.8rem !important;
+    gap: 4px !important;
 }
 
 .compact-input {
-    width: 60px;
-    padding: 6px 6px;
-    font-size: 0.9rem;
+    width: 50px !important;
+    padding: 3px 4px !important;
+    font-size: 0.85rem !important;
 }
 
 .compact-fav-btn {
-    padding: 7px 16px;
-    font-size: 0.9rem;
+    padding: 4px 10px !important;
+    font-size: 0.8rem !important;
+}
+
+/* 正誤カウント表示の上下余白も少し詰める */
+.stats-display {
+    margin: 10px 0 !important;
+    font-size: 0.95rem !important;
+}
+
+#remaining-count,
+#correct-count,
+#incorrect-count {
+    font-size: 1.1rem !important;
 }
 
 /* ---------------------------------------
