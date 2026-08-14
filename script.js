@@ -710,3 +710,69 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const exportBtn = document.getElementById('export-data-btn');
+    const importBtn = document.getElementById('import-data-btn');
+    const importFileInput = document.getElementById('import-file-input');
+
+    // 1. データの書き出し（エクスポート）
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            const dataToExport = {};
+            
+            // localStorageのデータをすべて取得
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                dataToExport[key] = localStorage.getItem(key);
+            }
+
+            if (Object.keys(dataToExport).length === 0) {
+                alert("保存されているデータがありません。");
+                return;
+            }
+
+            // JSONファイルとしてダウンロード処理
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
+            const downloadAnchor = document.createElement('a');
+            
+            const today = new Date().toISOString().slice(0, 10);
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `wordbook_backup_${today}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        });
+    }
+
+    // 2. データの読み込み（インポート）の準備
+    if (importBtn && importFileInput) {
+        importBtn.addEventListener('click', () => {
+            importFileInput.click();
+        });
+
+        importFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const importedData = JSON.parse(event.target.result);
+                    
+                    if (confirm("現在の進捗データが上書きされます。復元を実行しますか？")) {
+                        // データをlocalStorageにセット
+                        Object.keys(importedData).forEach(key => {
+                            localStorage.setItem(key, importedData[key]);
+                        });
+                        
+                        alert("データの引き継ぎが完了しました！ページを再読み込みします。");
+                        location.reload();
+                    }
+                } catch (err) {
+                    alert("ファイルの形式が正しくありません。");
+                }
+            };
+            reader.readAsText(file);
+        });
+    }
+});
