@@ -715,34 +715,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const importBtn = document.getElementById('import-data-btn');
     const importFileInput = document.getElementById('import-file-input');
 
-    // 1. データの書き出し（エクスポート）
-    if (exportBtn) {
-        exportBtn.addEventListener('click', () => {
-            const dataToExport = {};
-            
-            // localStorageのデータをすべて取得
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                dataToExport[key] = localStorage.getItem(key);
-            }
+// 1. データの書き出し（エクスポート：スマホ対応版）
+if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+        const dataToExport = {};
+        
+        // localStorageのデータをすべて取得
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            dataToExport[key] = localStorage.getItem(key);
+        }
 
-            if (Object.keys(dataToExport).length === 0) {
-                alert("保存されているデータがありません。");
-                return;
-            }
+        if (Object.keys(dataToExport).length === 0) {
+            alert("保存されているデータがありません。");
+            return;
+        }
 
-            // JSONファイルとしてダウンロード処理
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
-            const downloadAnchor = document.createElement('a');
-            
-            const today = new Date().toISOString().slice(0, 10);
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `wordbook_backup_${today}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        });
-    }
+        const today = new Date().toISOString().slice(0, 10);
+        const fileName = `wordbook_backup_${today}.json`;
+        const jsonStr = JSON.stringify(dataToExport, null, 2);
+
+        // Blobを作成してスマホでもダウンロード可能なURLを生成
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.href = url;
+        downloadAnchor.download = fileName;
+        
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        
+        // メモリ解除と要素削除
+        setTimeout(() => {
+            document.body.removeChild(downloadAnchor);
+            URL.revokeObjectURL(url);
+        }, 100);
+    });
+}
 
     // 2. データの読み込み（インポート）の準備
     if (importBtn && importFileInput) {
