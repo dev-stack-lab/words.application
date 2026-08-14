@@ -187,6 +187,20 @@
                             </button>
                         </div>
                     </div>
+                    <!-- view-settings の中に追加 -->
+                    <div class="settings-group" style="margin-top: 20px;">
+                        <h3 class="settings-title">データ引き継ぎ（バックアップ・復元）</h3>
+                        <div class="btn-group-vertical">
+                            <button id="export-data-btn" class="main-btn" style="background-color: #10b981;">
+                                データをファイルに保存（バックアップ）
+                            </button>
+                            <button id="import-data-btn" class="sub-btn" style="margin-top: 8px;">
+                                データを読み込んで復元
+                            </button>
+                            <!-- 非表示のファイル選択インプット -->
+                            <input type="file" id="import-file-input" accept=".json" class="hidden">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -214,6 +228,7 @@
             </div>
             <div id="help-update-content" class="hidden">
                 <ul class="help-list update-history">
+                    <li><strong>v1.8.8:</strong>データ受け継ぎができる機能を追加</li>
                     <li><strong>v1.8.7:</strong>一部デザインを変更</li>
                     <li><strong>v1.8.6:</strong>お気に入りの中から問題を出題できる機能を追加</li>
                     <li><strong>v1.8.5:</strong>メニューを追加</li>
